@@ -36,6 +36,7 @@ func CreateToken(ttl time.Duration, payload interface{}, privateKey string) (str
 	return token, nil
 }
 
+
 func ValidateToken(token string, publicKey string) (interface{}, error) {
 	decodedPublicKey, err := base64.StdEncoding.DecodeString(publicKey)
 	if err != nil {
@@ -66,3 +67,6 @@ func ValidateToken(token string, publicKey string) (interface{}, error) {
 
 	return claims["sub"], nil
 }
+
+
+//asymeetric encryption 

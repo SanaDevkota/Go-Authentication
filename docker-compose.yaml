@@ -3,16 +3,30 @@ version: "3.8"
 services:
   database:
     container_name: database
-    image: postgres:12.8
+    image: postgres:alpine
     restart: always
-    environment:
-      - POSTGRES_USER=pg
-      - POSTGRES_PASSWORD=pass
-      - POSTGRES_DB=crud
+    # environment:
+    #   - POSTGRES_USER=postgres
+    #   - POSTGRES_PASSWORD=12345
+    #   - POSTGRES_DB=auth
+    env_file:
+      - .env
     ports:
-      - 5432:5432
+      - 6500:5432
     volumes:
-      - db:/var/lib/postgresql/data 
+      - db:/var/lib/postgresql/data
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - database
+    env_file:
+      - .env
 
 volumes:
   db:
